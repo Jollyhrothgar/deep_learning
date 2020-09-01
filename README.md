@@ -14,3 +14,11 @@ Although I have some experience with 'deep learning', with maximum likelihood
 selection, I don't have much experience with neural networks, or formal
 educaiton in deep learning. Just what I've encountered over the course of
 earning my PhD in physics.
+
+# Building Custom Docker Runtime
+Put whatever you want to install in tensorflow image with pip in the requirements.txt file.
+
+Build in this directory with:
+```
+docker build -t tf_gpu_extra .
+```
