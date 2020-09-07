@@ -187,10 +187,6 @@ short-cut to reasonable defaults with the added benefit of being able to play
 around with your notebooks anywhere, even if you don't have access to your
 development machine.
 
-You can put your development machine behind a dyndns server to roll your own
-cloud environment and connect it to some domain service, but that's a tutorial
-for another day.
-
 ### Step 1: Connect local runtime to colab
 
 Go to colab, and connect to a local runtime, pasting the string that looks like
@@ -280,6 +276,74 @@ sense to you.
 $ docker build -t tf_gpu_extra .
 ```
 
+
+## Setting up a dns server to access your dev machine anywhere.
+
+You can actually connect to your dev machine from anywhere if you set up a few
+things.
+
+This section assumes you're comfortable setting up SSH connections, and can
+look up stuff that's unfamiliar. I've kept it really high level, since this
+repo is mostly about deep learning, but wanted to provide some hints that might
+be useful. We're already in pretty niche territory by assuming that one wants
+to set up their own GPU-accelerated deep learning dev environment and then
+access it from anywhere in the world without using more popularly available
+resource like AWS or Google's cloud-compute environment.
+
+1. Set up an ssh server on your dev machine.
+2. Install `ddclient`. `ddclient` is a program that can grab your external
+	 ip-address and then update a domain-name server with that address so that
+	 when external internet traffic is directed to your domain, it is redirected
+	 to a local computer. This is a sticking point for some folks, because
+	 typically, your ISP doesn't give you a static ip-address. So, you can know
+	 your current external ip address (Google 'What's my ip'), but then traffic
+	 has to get from the internet, to your computer, which probably lies behind a
+	 router.
+3. Set up port-forwarding on your router to redirect traffic from your SSH port
+	 to the ssh server on your local network.
+4. Register for a domain name at domains.google.com (it costs a few bucks a
+	 month at most).
+5. On your local machine, edit `/etc/ddclient.conf` so that it contains the
+	 following info:
+
+```
+# /etc/ddclient.conf
+ssl=yes
+
+# This info gets your public ip address from a free service, parses out only
+# the address portion with 'web-skip', and returns the ip address which is then
+# forwarded to your Google domain.
+use=web, web=checkip.dyndns.com/, web-skip='IP Address'
+protocol=googledomains
+
+# Username and password are obtained from
+# - https://domains.google.com/registrar/<YOUR DOMAIN>/dns
+# See section Synthetic Records / Dynamic DNS
+login=<YOUR USERNAME HERE>
+password='<YOUR PASSWORD HERE>' # quotes necessary
+
+# You can just place your whole domain record here, obviously, changing it so 
+# that its a real website address, e.g. ilikejerkey.mydomain.com
+```
+
+6. On your host (development) machine, set up secure SSH authentication - e.g.
+	 don't allow root-login, and make sure to generate a pair of ssh-keys, adding
+	 the public key to your `authorized_keys` file.
+
+7. Test your SSH connection by copying your private ssh key to another machine
+	 and trying:
+
+```bash
+ssh <your_user>@<your_google_domain> -i <your ssh private key>
+```
+
+8. If that works, logout and ssh again, this time, forwarding 8888 from the
+	 host machine to your client machine (whatever port you feel like). Then, you
+	 can load your colab runtime from that new client.
+
+## Final Step
+
+Drink a beer. You did a lot of work.
 [Celebrate!](https://www.youtube.com/watch?v=3GwjfUFyY6M)
 
 ## Useful Links:
