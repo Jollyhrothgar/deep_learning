@@ -75,7 +75,7 @@ for a CLI driven setup. I did stuff up to the point of running the NVIDIA
 script, restarted the docker daeomon and then stuff worked. Maybe all
 subsequent steps are not necessary? /shrug.
 
-## Step 2 - Install NVIDIA drivers with Ubuntu Software Center
+### Step 2 - Install NVIDIA drivers with Ubuntu Software Center
 
 If you don't know how to install proprietary drivers via ubuntu software
 center, you're gonna have a bad time. Search Google and you will find answers.
