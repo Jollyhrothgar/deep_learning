@@ -264,6 +264,10 @@ WORKDIR /tmp
 RUN python -m pip install -r requirements.txt
 ```
 
+Note that in the scripts area, you may need to add additional writeable
+directories to enable the system to download files, e.g. for
+`tensorflow_datasets` in the local jupyter run script.
+
 ### Step 2: Build your custom Docker runtime
 Put whatever you want to install in tensorflow image with pip in the
 requirements.txt file.
@@ -275,7 +279,6 @@ sense to you.
 ```bash
 $ docker build -t tf_gpu_extra .
 ```
-
 
 ## Setting up a dns server to access your dev machine anywhere.
 
