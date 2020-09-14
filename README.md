@@ -124,7 +124,49 @@ Set up docker, make sure your local user is added to the docker group,
 [official docs](https://docs.docker.com/engine/install/linux-postinstall/).
 This lets you run docker as your logged in user rather than as root.
 
-### Step 2 - Get the NVIDIA docker container from Tensorflow
+I also randomly installed other stuf, follwing several different procedures
+simulaneously, so its hard to precisely reporduce. I did a combination of the
+following:
+
+1. [Install tensorflow with docker](https://www.tensorflow.org/install/docker)
+2. [Install nvidia CUDA image for docker](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
+3. [Install random GPU script](https://github.com/Jollyhrothgar/deep_learning/blob/master/scripts/nvidia-container-runtime-script.sh)
+
+### Step 2 - Set up Jupyter lab environment using the mega-repo [here](https://github.com/iot-salzburg/gpu-jupyter)
+
+This has a relatively staightforward setup, but the build takes forever (maybe
+1-2 hours). Pros - it comes out of the box with tensorflow gpu support, plus a
+bunch of other nice configs with jupyter lab and extension support. I had to
+add a line in the dockerfile to add my required VIM code-cell plugin.
+
+Once following the quckstart guide, I then ran a service that will always start:
+```bash
+docker run -d -it --gpus all -p 8848:8888
+	-v /home/${USER}/workspace:/home/jovyan/work
+	-e GRANT_SUDO=yes
+	-e JUPYTER_ENABLE_LAB=yes
+	--user root
+	--restart always
+	--name gpu-jupyter_1 gpu-jupyter
+```
+
+With this setup, you can go nuts on `localhost:8488`. Note the stuff with
+home/jovyan/work refers to the filesystem of the docker container, not anything
+on your computer, so its mostly invisible. Also, the default password is `asdf`
+which doesn't matter so long as the ports running the jupyter lab server aren't
+exposed to the internet. For me, I SSH into my machine, then port-forward to
+get what I want locally, so its no biggie.
+
+## Set up with Tensorflow Docker Image
+
+This process is a bit more manual, but you control the config a bit more. I
+started with this setup, and it is relatively nice if you like using
+colaboratory and want to add python support that you can pip-install. However,
+its a little fragile, and also annoying to sync everything from colab back to
+github, so I've downgraded this to an alternative setup procedure.
+
+
+### Step 1 - Get the NVIDIA docker container from Tensorflow
 
 [Tensorflow](https://www.tensorflow.org/install/docker) has documentation for
 accomplishing this, but the quick version is:
@@ -133,7 +175,7 @@ accomplishing this, but the quick version is:
 docker pull tensorflow/tensorflow:latest-gpu-jupyter
 ```
 
-### Step 3 - Set up jupyter, link to local config
+### Step 2 - Set up jupyter, link to local config
 
 Jupyter needs to read config files locally, and docker by design separates your
 local filesystem from the docker filesystem. We break this so that you can
@@ -148,7 +190,7 @@ docker run -ti --gpus all --rm -u $(id -u):$(id -g) \
  jupyter_http_over_ws"
 ```
 
-### Step 4 - Run the jupyter container
+### Step 3 - Run the jupyter container
 
 To access the jupyter container in your local browser, you need to tunnel the
 port from the internal docker image out to your computer. Additionally, you
