@@ -3,17 +3,54 @@
 This repository represents my self-study learning about machine learning, and
 deep learning in general. I will be working through the following materials:
 
-* Basics of deep learning: http://ufldl.stanford.edu/tutorial/
-* Manifold hypothesis: http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/
-* Unsupervised learning with generative adversarial networks: https://github.com/Newmu/dcgan_code
-* Unsupervised learning with generative adversarial networks applied to NLP: http://karpathy.github.io/2015/05/21/rnn-effectiveness/
-* A study of bias-varience tradeoff and cross-validation
-* Read through a PhD thesis:  http://people.seas.harvard.edu/~dduvenaud/thesis.pdf
+*   Basics of deep learning: http://ufldl.stanford.edu/tutorial/
+*   Manifold hypothesis: http://colah.github.io/posts/2014-03-NN-Manifolds-Topology/
+*   Unsupervised learning with generative adversarial networks: https://github.com/Newmu/dcgan_code
+*   Unsupervised learning with generative adversarial networks applied to NLP: http://karpathy.github.io/2015/05/21/rnn-effectiveness/
+*   A study of bias-varience tradeoff and cross-validation
+*   Read through a PhD thesis:  http://people.seas.harvard.edu/~dduvenaud/thesis.pdf
 
 Although I have some experience with 'deep learning', with maximum likelihood
 selection, I don't have much experience with neural networks, or formal
 educaiton in deep learning. Just what I've encountered over the course of
 earning my PhD in physics.
+
+# Structure of learning
+
+I'm following the free udacity course [Intro to Tensorflow for Deep
+Learning](https://classroom.udacity.com/courses/ud187/lessons/ff58baf7-22c2-4052-9f9f-a8b2415ba7df/concepts/c6eb8ce8-cde1-4674-b154-b07fddfff2e2)
+
+I've archived all the tensorflow example data sets here (under
+`notebooks/tensorflow_example_colabs`), but I create my own version of the
+colabs by following along and pausing the videos so that I'm not just passively
+running the cells.
+
+
+I've also mapped my naming convention to the notebook naming convention, and
+also added some supplemental notebooks.
+
+TODO: hyperlink this list later.
+
+*   Lesson 1: Testing Environment
+		*   Chapter 1: Testing the environment and making sure we can run with GPU
+				acceleration.
+*   Lesson 2: Single Layer Perceptron Networks
+		*   Chapter 1: Introduction to tensorflow2 keras API and using multi-layer
+				perceptron networks.
+*   Lesson 3: Multilayer Perceptron Networks
+		*   Chapter 1: Using multilayer perceptron networks for image
+				classification on the fashion MNIST dataset.
+		*   Chapter 2: Using multilayer perceptron networks for fashion mnist
+				dataset, comparing against mean regression methods. 
+		*   Chapter 3: Using multilayer perceptron networks to solve the auto-mpg
+				dataset.
+*   Lesson 4: Convelutional neurual networks
+		*   Chapter 1: Convelutional Neural Networks and the Fashion MNIST dataset.
+		*   Chapter 2: TODO: investigating intermediate stages of image
+				classification
+*   Lesson 5: 
+
+
 
 # Setting Up Local Development Environment
 
@@ -24,21 +61,21 @@ configure.
 
 The basic idea of the setup is to accomplish the following steps:
 
-* Install NVIDIA drivers on the machine with a CUDA compatible NVIDIA graphics
-	card (Mine is running an NVIDIA GeForce GTX 1080 Ti, purchased on a whim
-	during the height of the bitcoin rage, so you can sob along with me at the
-	price...).
-* Install docker, and set it up with the proper group permissions so you don't
-	have to run it as root all the time - [official
-	docs](https://docs.docker.com/engine/install/linux-postinstall/), for the
-	lazy: `sudo groupadd docker; sudo usermod -aG docker $USER;` restart.
+*   Install NVIDIA drivers on the machine with a CUDA compatible NVIDIA
+		graphics card (Mine is running an NVIDIA GeForce GTX 1080 Ti, purchased on
+		a whim during the height of the bitcoin rage, so you can sob along with me
+		at the price...).
+*   Install docker, and set it up with the proper group permissions so you
+		don't have to run it as root all the time - [official
+		docs](https://docs.docker.com/engine/install/linux-postinstall/), for the
+		lazy: `sudo groupadd docker; sudo usermod -aG docker $USER;` restart.
 
 I've encuntered some issues with randomly losing my ability to run the
 containers on system reboots, but I think this must have to do with 
 
-1. Driver updates?
-2. Load order (e.g. docker daemon starts before something that needs to start
-	 first)
+1.   Driver updates?
+2.   Load order (e.g. docker daemon starts before something that needs to start
+		 first)
 
 I'd have to troubleshoot more thoroughly to get a sterling set-up proceedure,
 and there are probably gotchas along the way, but hopefully, this setup will
@@ -59,8 +96,8 @@ system update would break your computer.
 
 The goal of this setup procedure is to reduce the complexity to
 
-1. Install NVIDIA's proprietary drivers through the Ubuntu software center
-2. Handle the rest with docker containers.
+1.   Install NVIDIA's proprietary drivers through the Ubuntu software center
+2.   Handle the rest with docker containers.
 
 ### Step 1: When you break your configuration by restarting your computer
 
@@ -128,9 +165,9 @@ I also randomly installed other stuf, follwing several different procedures
 simulaneously, so its hard to precisely reporduce. I did a combination of the
 following:
 
-1. [Install tensorflow with docker](https://www.tensorflow.org/install/docker)
-2. [Install nvidia CUDA image for docker](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
-3. [Install random GPU script](https://github.com/Jollyhrothgar/deep_learning/blob/master/scripts/nvidia-container-runtime-script.sh)
+1.   [Install tensorflow with docker](https://www.tensorflow.org/install/docker)
+2.   [Install nvidia CUDA image for docker](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
+3.   [Install random GPU script](https://github.com/Jollyhrothgar/deep_learning/blob/master/scripts/nvidia-container-runtime-script.sh)
 
 ### Step 2 - Set up Jupyter lab environment using the mega-repo [here](https://github.com/iot-salzburg/gpu-jupyter)
 
@@ -335,21 +372,21 @@ to set up their own GPU-accelerated deep learning dev environment and then
 access it from anywhere in the world without using more popularly available
 resource like AWS or Google's cloud-compute environment.
 
-1. Set up an ssh server on your dev machine.
-2. Install `ddclient`. `ddclient` is a program that can grab your external
-	 ip-address and then update a domain-name server with that address so that
-	 when external internet traffic is directed to your domain, it is redirected
-	 to a local computer. This is a sticking point for some folks, because
-	 typically, your ISP doesn't give you a static ip-address. So, you can know
-	 your current external ip address (Google 'What's my ip'), but then traffic
-	 has to get from the internet, to your computer, which probably lies behind a
-	 router.
-3. Set up port-forwarding on your router to redirect traffic from your SSH port
-	 to the ssh server on your local network.
-4. Register for a domain name at domains.google.com (it costs a few bucks a
-	 month at most).
-5. On your local machine, edit `/etc/ddclient.conf` so that it contains the
-	 following info:
+1.   Set up an ssh server on your dev machine.
+2.   Install `ddclient`. `ddclient` is a program that can grab your external
+		 ip-address and then update a domain-name server with that address so that
+		 when external internet traffic is directed to your domain, it is
+		 redirected to a local computer. This is a sticking point for some folks,
+		 because typically, your ISP doesn't give you a static ip-address. So, you
+		 can know your current external ip address (Google 'What's my ip'), but
+		 then traffic has to get from the internet, to your computer, which
+		 probably lies behind a router.
+3.   Set up port-forwarding on your router to redirect traffic from your SSH
+		 port to the ssh server on your local network.
+4.   Register for a domain name at domains.google.com (it costs a few bucks a
+		 month at most).
+5.   On your local machine, edit `/etc/ddclient.conf` so that it contains the
+		 following info:
 
 ```
 # /etc/ddclient.conf
@@ -371,20 +408,20 @@ password='<YOUR PASSWORD HERE>' # quotes necessary
 # that its a real website address, e.g. ilikejerkey.mydomain.com
 ```
 
-6. On your host (development) machine, set up secure SSH authentication - e.g.
-	 don't allow root-login, and make sure to generate a pair of ssh-keys, adding
-	 the public key to your `authorized_keys` file.
+6.   On your host (development) machine, set up secure SSH authentication -
+		 e.g.  don't allow root-login, and make sure to generate a pair of
+		 ssh-keys, adding the public key to your `authorized_keys` file.
 
-7. Test your SSH connection by copying your private ssh key to another machine
-	 and trying:
+7.   Test your SSH connection by copying your private ssh key to another
+		 machine and trying:
 
 ```bash
 ssh <your_user>@<your_google_domain> -i <your ssh private key>
 ```
 
-8. If that works, logout and ssh again, this time, forwarding 8888 from the
-	 host machine to your client machine (whatever port you feel like). Then, you
-	 can load your colab runtime from that new client.
+8.   If that works, logout and ssh again, this time, forwarding 8888 from the
+		 host machine to your client machine (whatever port you feel like). Then,
+		 you can load your colab runtime from that new client.
 
 ## Final Step
 
@@ -396,17 +433,17 @@ Drink a beer. You did a lot of work.
 During my research on how to set this up properly, I found the following links
 to be useful
 
-* https://jupyter-docker-stacks.readthedocs.io/en/latest/using/running.html
-	* Running jupyter notebooks using the docker CLI
-* https://docs.docker.com/engine/reference/run/
-	* General docs on the Docker engine
-* https://stackoverflow.com/questions/61024722/how-to-use-google-colab-with-a-local-tensorflow-jupyter-server-using-powershell
-	* Some info about how to run docker, with tensorflow, with local colab runtimes.
-* https://github.com/tensorflow/tensorflow/issues/25247#issuecomment-459644861
-	* Magic docker commands to point a runtime to your jupyter config, local
+*   https://jupyter-docker-stacks.readthedocs.io/en/latest/using/running.html
+	  *   Running jupyter notebooks using the docker CLI
+*   https://docs.docker.com/engine/reference/run/
+	  *   General docs on the Docker engine
+*   https://stackoverflow.com/questions/61024722/how-to-use-google-colab-with-a-local-tensorflow-jupyter-server-using-powershell
+	  *   Some info about how to run docker, with tensorflow, with local colab runtimes.
+*   https://github.com/tensorflow/tensorflow/issues/25247#issuecomment-459644861
+	  *   Magic docker commands to point a runtime to your jupyter config, local
 		filesystem, and port-forward.
-* https://stackoverflow.com/questions/58191215/how-to-add-python-libraries-to-docker-image
-	* Modifying a docker image to add additional python dependencies
-* https://research.google.com/colaboratory/local-runtimes.html
-	* Google's documentation for how to set up a local colab runtme.
+*   https://stackoverflow.com/questions/58191215/how-to-add-python-libraries-to-docker-image
+	  *   Modifying a docker image to add additional python dependencies
+*   https://research.google.com/colaboratory/local-runtimes.html
+	  *   Google's documentation for how to set up a local colab runtme.
 
