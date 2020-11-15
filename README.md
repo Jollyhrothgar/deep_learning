@@ -70,14 +70,14 @@ The basic idea of the setup is to accomplish the following steps:
 		docs](https://docs.docker.com/engine/install/linux-postinstall/), for the
 		lazy: `sudo groupadd docker; sudo usermod -aG docker $USER;` restart.
 
-I've encuntered some issues with randomly losing my ability to run the
+I've encountered some issues with randomly losing my ability to run the
 containers on system reboots, but I think this must have to do with 
 
 1.   Driver updates?
 2.   Load order (e.g. docker daemon starts before something that needs to start
 		 first)
 
-I'd have to troubleshoot more thoroughly to get a sterling set-up proceedure,
+I'd have to troubleshoot more thoroughly to get a sterling set-up procedure,
 and there are probably gotchas along the way, but hopefully, this setup will
 help get you started.
  
@@ -109,7 +109,7 @@ The docker stuff should all remain valid, assuming that we can get the GPU
 drivers fixed. Following [this guide
 here](https://collabnix.com/introducing-new-docker-cli-api-support-for-nvidia-gpus-under-docker-engine-19-03-0-beta-release/)
 for a CLI driven setup. I did stuff up to the point of running the NVIDIA
-script, restarted the docker daeomon and then stuff worked. Maybe all
+script, restarted the docker daemon and then stuff worked. Maybe all
 subsequent steps are not necessary? /shrug.
 
 ### Step 2 - Install NVIDIA drivers with Ubuntu Software Center
@@ -161,8 +161,8 @@ Set up docker, make sure your local user is added to the docker group,
 [official docs](https://docs.docker.com/engine/install/linux-postinstall/).
 This lets you run docker as your logged in user rather than as root.
 
-I also randomly installed other stuf, follwing several different procedures
-simulaneously, so its hard to precisely reporduce. I did a combination of the
+I also randomly installed other stuff, following several different procedures
+simultaneously, so its hard to precisely reproduce. I did a combination of the
 following:
 
 1.   [Install tensorflow with docker](https://www.tensorflow.org/install/docker)
@@ -171,7 +171,7 @@ following:
 
 ### Step 2 - Set up Jupyter lab environment using the mega-repo [here](https://github.com/iot-salzburg/gpu-jupyter)
 
-This has a relatively staightforward setup, but the build takes forever (maybe
+This has a relatively straight-forward setup, but the build takes forever (maybe
 1-2 hours). Pros - it comes out of the box with tensorflow gpu support, plus a
 bunch of other nice configs with jupyter lab and extension support. I had to
 add a line in the dockerfile to add my required VIM code-cell plugin.
@@ -215,7 +215,7 @@ docker pull tensorflow/tensorflow:latest-gpu-jupyter
 ### Step 2 - Set up jupyter, link to local config
 
 Jupyter needs to read config files locally, and docker by design separates your
-local filesystem from the docker filesystem. We break this so that you can
+local file system from the docker file system. We break this so that you can
 reuse your local jupyter config:
 
 This gets run once:
@@ -232,7 +232,7 @@ docker run -ti --gpus all --rm -u $(id -u):$(id -g) \
 To access the jupyter container in your local browser, you need to tunnel the
 port from the internal docker image out to your computer. Additionally, you
 need to tell the docker image where your config for jupyter is, and where to
-put notebooks on your local filesystem - otherwise everything lives *inside*
+put notebooks on your local file-system - otherwise everything lives *inside*
 the docker container. In this case, we're using docker to handle drivers and
 stuff, but we would prefer to use our local computer for version control, file
 management, etc.
@@ -303,7 +303,7 @@ Returns:
 
 ## Modify your Docker image to suit your needs
 
-Now that you have a Docker image which supports GPU-accellerated tensorflow
+Now that you have a Docker image which supports GPU-accelerated tensorflow
 (thanks, Google, Docker, and friendly internet strangers that are far more
 patient than I am!), you might want to modify it to suit your needs.
 
